@@ -19,3 +19,13 @@
 Видеозаписи практикумов [выкладываются в этом плейлисте](https://www.youtube.com/playlist?list=PLVF5PzSHILHRH_HD4SzuaAz05eByyqYMl).
 
 Задания [выкладываются здесь](https://github.com/mmp-practicum-team/mmp_practicum_spring_2021/tree/main/Tasks).
+
+
+## Занятия
+
+| Дата | Номер | Тема | Материалы | ДЗ |
+| :---: | :---: | --- | --- | --- |
+| 10 февраля  | Практикум 1  | <ul><li>Автоматическое дифференцирование</li><li>Задачи</li><li>Backpropagation</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
+| 17 февраля  | Практикум 2  | <ul><li>Введение в нейросети</li><li>MLP</li><li>Инициализация сетей</li></ul> | ... | [Полносвязная нейронная сеть на numpy](https://github.com/mmp-practicum-team/mmp_practicum_spring_2021/blob/main/Tasks/task1/lab_01.ipynb) |
+| 24 февраля  | Практикум 3  | <ul><li>Dropout</li><li>BatchNorm</li><li>Введение в Pytorch</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
+| 03 марта  | Практикум 4  | <ul><li>Свёртки</li><li>Свёрточные сети в Pytorch</li><li>Сегментация</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
