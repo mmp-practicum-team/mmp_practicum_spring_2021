@@ -29,7 +29,7 @@
 | Дата | Номер | Тема | Материалы | ДЗ |
 | :---: | :---: | --- | --- | --- |
 | 10 февраля  | Практикум 1  | <ul><li>Автоматическое дифференцирование</li><li>Задачи</li><li>Backpropagation</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
-| 17 февраля  | Практикум 2  | <ul><li>Введение в нейросети</li><li>MLP</li><li>Инициализация сетей</li></ul> | ... | [Полносвязная нейронная сеть на numpy](https://github.com/mmp-practicum-team/mmp_practicum_spring_2021/blob/main/Tasks/task1/lab_01.ipynb) |
+| 17 февраля  | Практикум 2  | <ul><li>Введение в нейросети</li><li>MLP</li><li>Инициализация сетей</li></ul> | [Введение в нейросети. MLP. Инициализация сетей](https://github.com/mmp-practicum-team/mmp_practicum_spring_2021/blob/main/Seminars/Seminar%2002/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%20%D0%BD%D0%B5%D0%B9%D1%80%D0%BE%D1%81%D0%B5%D1%82%D0%B8.%20MLP.%20%D0%98%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D1%81%D0%B5%D1%82%D0%B5%D0%B9.ipynb) | [Полносвязная нейронная сеть на numpy](https://github.com/mmp-practicum-team/mmp_practicum_spring_2021/blob/main/Tasks/task1/lab_01.ipynb) |
 | 24 февраля  | Практикум 3  | <ul><li>Dropout</li><li>BatchNorm</li><li>Введение в Pytorch</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
 | 03 марта  | Практикум 4  | <ul><li>Свёртки</li><li>Свёрточные сети в Pytorch</li><li>Сегментация</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
 
