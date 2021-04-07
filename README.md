@@ -33,7 +33,7 @@
 | 24 февраля  | 3  | <ul><li>Dropout</li><li>BatchNorm</li><li>Введение в Pytorch</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
 | 03 марта  | 4  | <ul><li>Свёртки</li><li>Свёрточные сети в Pytorch</li><li>Сегментация</li></ul> | [Свёртки. Свёрточные сети в Pytorch. Сегментация](Seminars/Seminar%2004/Свёртки.%20Свёрточные%20сети%20в%20Pytorch.%20Сегментация.pdf) | ¯\\\_(ツ)\_/¯ |
 | 10 марта | 5 | <ul><li>Свёрточные сети в Pytorch</li><li>Сегментация</li></ul> | [FCN](Seminars/Seminar%2005/FCN.ipynb) | [CNN для сегментации](Tasks/task2/lab_02.ipynb) |
-| 17 марта | 6 | <ul><li>Рекуррентные нейронные сети</li></ul> | [RNN](Seminar%2006/) | ¯\\\_(ツ)\_/¯ |
+| 17 марта | 6 | <ul><li>Рекуррентные нейронные сети</li></ul> | [RNN](Seminars/Seminar%2006) | ¯\\\_(ツ)\_/¯ |
 | 24 марта | 7 | <ul><li>LSTM</li><li>RNN with Attention</li></ul> | ... | [Dropout. LSTM. LM](Tasks/task3/lab_03.ipynb) |
 | 31 марта | - |  | ... | ¯\\\_(ツ)\_/¯ |
 | 07 апреля | 8 | <ul><li>Большие данные</li><li>Экосистема Hadoop</li><li>HDFS</li></ul> | [Hadoop. HDFS](Seminars/Seminar%2008) | ¯\\\_(ツ)\_/¯ |
