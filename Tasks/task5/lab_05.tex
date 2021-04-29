@@ -1,0 +1,215 @@
+\documentclass[11pt, fleqn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{nccmath}
+\usepackage{amssymb, amsmath, mathrsfs, amsthm}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage[footnotesize]{caption2}
+\usepackage{indentfirst}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{multirow}
+\usepackage{fancyvrb}
+\usepackage{etoolbox}
+\usepackage{pgfplotstable}
+\usepackage{minted}
+\usepackage[left=15mm, top=12mm, right=15mm, bottom=12mm, nohead=10, nofoot=10]{geometry}
+
+% Параметры страницы
+%\flushbottom
+\raggedbottom
+\tolerance 3000
+% подавить эффект "висячих стpок"
+\clubpenalty=10000
+\widowpenalty=10000
+\renewcommand{\baselinestretch}{1.1}
+% \renewcommand{\baselinestretch}{1.5} %для печати с большим интервалом
+
+\BeforeBeginEnvironment{Verbatim}{\def\baselinestretch{1}}
+\BeforeBeginEnvironment{itemize}{\def\baselinestretch{1}}
+
+% Дополнительные команды для личных обозначений
+\newcommand{\expectation}{\mathop{\mathbb{E}}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\loss}{\mathop{\mathcal{L}}}
+\newcommand{\mse}{\mathop{MSE}}
+\newcommand{\scalarproduct}[1]{\langle #1 \rangle}
+
+\newcommand{\predictionfunction}{\hat{f}}
+\newcommand{\ensemblefunction}{a}
+\newcommand{\optimizationmethodfunction}{\tilde{f}}
+\newcommand{\distinguishparameter}{\alpha}
+\newcommand{\objects}{X}
+\newcommand{\results}{Y}
+\newcommand{\predictedobjects}{\widehat{\objects}}
+
+\newcommand{\naturalnumbers}{\mathbb{N}}
+
+\newcommand{\ticket}{t}
+\newcommand{\tickets}{T}
+\newcommand{\labeledtickets}{\hat{\tickets}}
+\newcommand{\subsettickets}{\tilde{\tickets}}
+\newcommand{\exception}{e}
+\newcommand{\exceptions}{E}
+\newcommand{\queryticket}{\hat{\ticket}}
+
+\newcommand{\similarity}{S}
+\newcommand{\similarityexception}{\similarity_e}
+\newcommand{\realsimilaritymatrix}{\hat{\similarity}}
+\newcommand{\predictedticketmatrix}{\bar{\similarity}}
+\newcommand{\quality}{Q}
+\newcommand{\qualityobject}{\quality_\ticket}
+\newcommand{\vectorize}[1]{V(#1)}
+\newcommand{\vectorizeobject}[1]{v(#1)}
+\newcommand{\vectorizemethod}[1]{v_m(#1)}
+
+\newcommand{\numbertickets}{N}
+\newcommand{\numberexceptions}{M}
+\newcommand{\numberneighbours}{K}
+
+\newcommand{\numberobjects}{N}
+\newcommand{\numberpredictionfunctions}{M}
+
+\newcommand{\for}[3]{\sum\limits_{#1 = #2}^{#3}}  % Usage: \for{index}{begin}{end}
+\newcommand{\forn}[2]{\for{#1}{1}{#2}}  % Usage: \forn{index}{end}
+
+\newcommand{\many}[3]{#1 1 #2, #1 2 #2, \dots, #1 #3 #2}  % Usage: \many{prefix}{suffix}{end}
+
+\newcommand{\reference}[1]{(\hyperref[#1]{\ref{#1}})}
+
+\newcommand{\ensemblefunctionfull}{\ensemblefunction(\many{\predictionfunction_}{(x)}{\numberpredictionfunctions})}
+
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\EE}{\mathbb{E}} % для обозначения матожидания
+\DeclareMathOperator*{\DD}{\mathbb{D}} % для обозначения дисперсии
+\DeclareMathOperator*{\PP}{\mathbb{P}} % для обозначения вероятности
+\DeclareMathOperator*{\RR}{\mathbb{R}} % для обозначения вероятности
+
+\begin{document}
+
+
+\newpage
+\section{Рекомендательные системы}
+Сегодня рекомендательные системы встречаются повсеместно. В интернет-магазине вы можете увидеть блоки с «похожими товарами», на новостном сайте «похожие новости» или «новости, которые могут вас заинтересовать», на сайте с арендой фильмов это могут быть блоки с «похожими фильмами» или «рекомендуем вам посмотреть».
+
+Задача рекомендательной системы заключается в нахождении небольшого числа фильмов (Item), которые
+скорее всего заинтересуют конкретного пользователя (User), используя информацию о предыдущей его активности и характеристиках фильмов.
+
+Широко известен конкурс компании Netflix, которая в 2006 году предложила предсказать оценки пользователя для фильмов в шкале от $1$ до $5$ по известной части оценок. Победителем признавалась команда, которая улучшит RMSE на тестовой выборке на $10\%$ по сравнению с их внутренним решением. За время проведения конкурса появилось много новых методов решения поставленной задачи.
+
+Обычно в таких задачах выборка представляет собой тройки $(u, i, r_{u,i})$, где $u$ – пользователь, $i$ – фильм, $r_{u,i}$ – рейтинг. Далее будем считать, что рейтинги нормализованы на отрезке $[0, 1]$.
+
+\section{Neighborhood подход в коллаборативной фильтрации}
+Имея матрицу user-item из оценок пользователей можно определить меру adjusted cosine similarity похожести товаров $i$ и $j$ как векторов в пространстве пользователей:
+\begin{ceqn}
+\begin{equation} \label{eq:1}
+sim(i, j) = \frac{\sum\limits_{u \in U_{i,j}}(r_{u, i} - \overline{r_{u}})(r_{u,j} - \overline{r_{u}})}{\sqrt{\sum\limits_{u \in U_{i,j}}(r_{u, i} - \overline{r_{u}})^{2}}\sqrt{\sum\limits_{u \in U_{i,j}}(r_{u, j} - \overline{r_{u}})^{2}}}
+\end{equation}
+\end{ceqn}
+где $U_{i,j}$ – множество пользователей, которые оценили фильмы $i$ и $j$, $\overline{r_{u}}$ – средний рейтинг пользователя $u$.
+
+Рейтинги для неизвестных фильмов считаются по следующей формуле:
+\begin{ceqn}
+\begin{equation} \label{eq:2}
+\hat{r}_{u,i}=\frac{\sum\limits_{j \in I_{u}}sim(i,j)r_{u,j}}{\sum\limits_{j \in I_{u}}sim(i,j)}
+\end{equation}
+\end{ceqn}
+где $I_{u}$ - множество фильмов, которые оценил пользователь $u$. Такой подход называется item-oriented. Обратим внимание на то, что $sim(i, j) \in [-1, 1]$. Это может привести к делению на ноль или значениям $\hat{r}_{u,i}$ вне диапазона $[0, 1]$. Избавиться от этой проблемы можно, например, положив равными нулю отрицательные значения $sim(i, j)$.
+
+\section{Описание задания}
+В рамках данного задания Вам будет необходимо реализовать коллаборативную фильтрацию по формулам \ref{eq:1}, \ref{eq:2} с использованием фреймворка MapReduce. Ваша программа, получая на вход список троек $(u, i, r_{u,i})$ и список соответствий между номером фильма и его названием, должна вывести для каждого пользователя \textbf{топ-100} фильмов с самым высоким предсказанным рейтингом. 
+
+При вычислений рекомендаций необходимо учитывать только те фильмы, которые пользователь ещё не оценил. Рекомендации выводятся по убыванию предсказанной оценки. При равенстве предсказанных оценок выше в списке рекомендаций должен стоять фильм с лексикографически меньшим названием.
+
+Файл с предсказаниями необходимо представить в следующем виде:\\
+\textbf{<user\_id>@<rating\_1>\#<film\_name\_1>@...@<rating\_100>\#<film\_name\_100>}\\
+
+
+В качестве датасета предлагается использовать \href{https://grouplens.org/datasets/movielens/latest/}{MovieLens}. Используйте <<small>> версию датасета. Результат работы Вашего решения на этом датасете нужно приложить при сдаче задания (в папку \textbf{data/output/final}).
+
+При выполнении задания необходимо привести подробное описание Вашего решения (в файле \textbf{description.md/html/pdf}), в частности:
+\begin{enumerate}
+	\item Описание каждой стадии выполнения программы и каждой map-reduce задачи.
+	\item Сложность по числу операций и по количеству памяти для каждого маппера и редьюсера. Используйте следующие обозначения: $U$ -- общее число пользователей, $I$ -- общее число фильмов, $M$ -- число мапперов, $R$ -- число редьюсеров,
+	$\alpha$ -- средняя доля фильмов, оценённых одним пользователем (эквивалентно средней доле пользователей, оценивших один фильм и доле известных оценок к общему числу возможных оценок $UI$).
+	\item Суммарное время работы вашей программы.
+	\item Решение бонусных заданий.
+\end{enumerate}
+
+\section{Технические детали реализации}
+Обратите внимание на следующие моменты, которые помогут успешно решить задачу:
+\begin{itemize}
+	\item \href{https://github.com/nakhodnov17/docker-hadoop-spark/tree/master/examples/wordcount_streaming}{Пример запуска Hadoop Streaming программы на кластере}.
+	\item Для использования пользовательских сепараторов используйте следующие опции:
+	\item[]
+		\begin{minted}{bash}
+		-D stream.num.map.output.key.fields=<number_of_fields_for_key> 
+		-D stream.map.output.field.separator=<custom_separator>
+		-D stream.reduce.input.field.separator=<custom_separator>
+		-D mapreduce.map.output.key.field.separator=<custom_separator>
+		\end{minted}
+	\item Для реализации вторичной сортировки могут пригодится следующие опции:
+	\item[]
+		\begin{minted}{bash}
+		-D mapreduce.partition.keycomparator.options=<sort_options>
+		-D mapreduce.job.output.key.comparator.class= \
+				org.apache.hadoop.mapred.lib.KeyFieldBasedComparator 
+		-D mapreduce.partition.keypartitioner.options=<partition_options>
+		-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+		\end{minted}
+	\item Для управления памятью, выделяемой контейнерами используйте следующие опции:
+	\item[]
+		\begin{minted}{bash}
+		-D mapreduce.map.memory.mb=<physical_memory_for_each_mapper> 
+		-D mapreduce.reduce.memory.mb=<physical_memory_for_each_reducer> 
+		-D mapreduce.map.java.opts=-Xmx<heap_size_for_each_mapper>m 
+		-D mapreduce.reduce.java.opts=-Xmx<heap_size_for_each_reducer>m 
+		-D yarn.nodemanager.vmem-pmem-ratio=<virtual_to_physical_memory_ratio>
+		\end{minted}
+	\item[] Подробнее смотрите в \href{https://stepik.org/lesson/21001/step/7?unit=5085}{курсе на Stepik}.
+	\item Детали этих опций и другие параметры смотрите в \href{https://hadoop.apache.org/docs/current/hadoop-streaming/HadoopStreaming.html}{документации по Hadoop Streaming}.
+	\item Учтите, что $sim(i, i) = 1 \;\forall i \in \{1,...,I\}$. Также, гарантируйте отсутствие деления на ноль при вычислениях по формулам \ref{eq:1}, \ref{eq:2}.
+	\item В файле \textbf{movies.csv} названия фильмов могут содержать запятые, поэтому используйте \textbf{csv.reader} из библиотеки \textbf{csv} для корректного разбиения строк этого файла.
+	\item Задание можно реализовать так, чтобы время выполнение задачи было $\approx$\textbf{30 минут}. Если Ваша программа выполняется сильно дольше, значит Ваша реализация неоптимальна.
+\end{itemize}
+
+\section{Формат сдачи задания}
+При выполнении задания можно использовать любой способ запуска Hadoop кластера. Возможные способы следующие:
+\begin{itemize}
+	\item Запуск кластера внутри docker-контейнера. Инструкцию развертыванию контейнеров смотрите  \href{https://github.com/nakhodnov17/docker-hadoop-spark}{в репозитории} (рекомендуемый способ).
+	\item \href{https://medium.com/google-cloud/launch-a-hadoop-cluster-in-90-seconds-or-less-in-google-cloud-dataproc-b3acc1c02598}{Запуск Hadoop кластера на платформе Google Cloud} (учтите, что библиотеки, например, numpy необходимо будет установить отдельно).
+\end{itemize}
+
+Формат сдачи задания строго регламентирован:
+\begin{enumerate}
+	\item Все материалы сдаются в виде архива с названием \textbf{<ФИО>\_task\_04.zip}
+	\item Внутри архива находятся:
+	\begin{itemize}
+		\item Скрипт \textbf{run.sh}, который запускает всю задачу и в результате работы формирует искомый список рекомендаций. Запуск программы должен подразумевать только запуск этого скрипта.
+		\item Папка \textbf{src} в которой должен находится весь код, используемый в задании. В частности, для каждой map-reduce стадии Вашей программы должны быть файлы \textbf{mapper\_<stage\_n>.py}, \textbf{reducer\_<stage\_n>.py}. Если используются другие скрипты (комбайнер и т.д.) они также должны иметь в названии номер соответствующей стадии.
+		\item Папка \textbf{data} c подпапкой \textbf{input}, в которой должны лежать входные данные (файлы \textbf{ratings.csv}, \textbf{movies.csv}) и подпапкой \textbf{output}, в коротой после завершения работы \textbf{run.sh} будет расположен результат работы программы. В частности, внутри \textbf{output} для каждой map-reduce стадии в директории \textbf{stage\_<stage\_n>} дожен быть выход редьюсера (или маппера в случае map-only задачи) соответствующей стадии. В папке \textbf{final} должен быть итоговый список рекомендаций. Также, Вы можете предусмотреть сохранение любых промежуточных результатов в папке \textbf{output}. Присылать сами промежуточные файлы не требуется, необходимо прислать только содержимое папки \textbf{final}.
+		\item Файл \textbf{description.md/html/pdf} в котором содержится описание Вашего решения.
+	\end{itemize}
+	\item Программа должна запускаться только запуском \textbf{run.sh} без каких-либо дополнительных предварительных действий. 
+\end{enumerate}
+При несоблюдении формата сдачи могут быть сняты баллы.
+ 
+\section{Бонусные задания}
+\subsection{Анализ полученного решения. (3 балла)}
+Для выполнения этой части выполните следующее:
+\begin{enumerate}
+	\item Реализуйте скрипт для генерации данных, похожих на настоящие. Реализуйте генерацию для различных $U, I, \alpha$.
+	\item Замерьте время работы каждой стадии программы для различных значений $U, I, \alpha, M, R$. Обязательно сделайте замеры времени для датасета большего объема, чем в датасете <<small>>
+	\item Постройте графики зависимости времени работы от разных параметров.
+	\item Докажите, используя полученные данные, что асимптотика Вашего решения соответствует теоретической (например, можно отдельно нарисовать графики в log-log шкале). Если наблюдается несоответствие, то объясните почему.
+\end{enumerate}
+\subsection{Использование фреймворка. (2 балла)}
+Реализуйте Вашу программу с использованием фреймворка \href{https://mrjob.readthedocs.io/en/latest/}{mrjob}.
+\subsection{Запуск на больших данных. (1 балла)}
+Запустите задачу на \href{https://grouplens.org/datasets/movielens/10m/}{существенно больших данных}. Обратите внимание, выполнение может занять порядка 6-7 часов и до 70Gb памяти. Засеките время работы каждой стадии и сравните с временем работы на <<small>> датасете. Согласуются ли полученные результаты с теоретическими формулами для сложности алгоритма? Если нет, то почему?
+
+
+\end{document}
