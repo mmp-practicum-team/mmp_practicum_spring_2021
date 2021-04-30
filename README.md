@@ -36,12 +36,15 @@
 | 17 марта | 6 | <ul><li>Рекуррентные нейронные сети</li></ul> | [RNN](Seminars/Seminar%2006) | ¯\\\_(ツ)\_/¯ |
 | 24 марта | 7 | <ul><li>LSTM</li><li>RNN with Attention</li></ul> | ... | [Dropout. LSTM. LM](Tasks/task3/lab_03.ipynb) |
 | 31 марта | - |  | ... | ¯\\\_(ツ)\_/¯ |
-| 07 апреля | 8 | <ul><li>Большие данные</li><li>Экосистема Hadoop</li><li>HDFS</li></ul> | [Hadoop. HDFS](Seminars/Seminar%2008) | ¯\\\_(ツ)\_/¯ |
+| 07 апреля | 8 | <ul><li>Большие данные</li><li>Экосистема Hadoop</li><li>HDFS</li></ul> | [Hadoop. HDFS](Seminars/Seminar%2008) | [HDFS basics](Tasks/task4/hdfs_task.md) |
+| 14 апреля | 9 | <ul><li>Hadoop</li><li>MapReduce workflow</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
+| 22 апреля | 10 | <ul><li>Hadoop</li><li>YARN</li><li>Hadoop Streaming</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
+| 28 апреля | 11 | <ul><li>Hadoop</li><li>Типичные MapReduce задачи</li></ul> | ... | [MapReduce Collaborative Filtering](Tasks/task5/lab_05.ipynb) |
 
 ## Формат сдачи курса
 
 * В рамках семестра предполагается четыре практических задания, каждое оценивается из 10 баллов.
-* За каждый день просрочки задания назначется штраф — 1 балл.
+* За каждый день просрочки задания назначается штраф — 1 балл.
 * Критерии итоговой оценки:
   * отлично — 32 балла, 4 практических задания сданы на оценку ≥ 4
   * хорошо — 24 балла, 3 практических задания сданы на оценку ≥ 4
