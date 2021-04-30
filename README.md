@@ -39,7 +39,7 @@
 | 07 апреля | 8 | <ul><li>Большие данные</li><li>Экосистема Hadoop</li><li>HDFS</li></ul> | [Hadoop. HDFS](Seminars/Seminar%2008) | [HDFS basics](Tasks/task4/hdfs_task.md) |
 | 14 апреля | 9 | <ul><li>Hadoop</li><li>MapReduce workflow</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
 | 22 апреля | 10 | <ul><li>Hadoop</li><li>YARN</li><li>Hadoop Streaming</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
-| 28 апреля | 11 | <ul><li>Hadoop</li><li>Типичные MapReduce задачи</li></ul> | ... | [MapReduce Collaborative Filtering](Tasks/task5/lab_05.ipynb) |
+| 28 апреля | 11 | <ul><li>Hadoop</li><li>Типичные MapReduce задачи</li></ul> | ... | [MapReduce Collaborative Filtering](Tasks/task5/lab_05.pdf) |
 
 ## Формат сдачи курса
 
