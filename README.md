@@ -37,9 +37,10 @@
 | 24 марта | 7 | <ul><li>LSTM</li><li>RNN with Attention</li></ul> | ... | [Dropout. LSTM. LM](Tasks/task3/lab_03.ipynb) |
 | 31 марта | - |  | ... | ¯\\\_(ツ)\_/¯ |
 | 07 апреля | 8 | <ul><li>Большие данные</li><li>Экосистема Hadoop</li><li>HDFS</li></ul> | [Hadoop. HDFS](Seminars/Seminar%2008) | [HDFS basics](Tasks/task4/hdfs_task.md) |
-| 14 апреля | 9 | <ul><li>Hadoop</li><li>MapReduce workflow</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
-| 22 апреля | 10 | <ul><li>Hadoop</li><li>YARN</li><li>Hadoop Streaming</li></ul> | ... | ¯\\\_(ツ)\_/¯ |
-| 28 апреля | 11 | <ul><li>Hadoop</li><li>Типичные MapReduce задачи</li></ul> | ... | [MapReduce Collaborative Filtering](Tasks/task5/lab_05.pdf) |
+| 14 апреля | 9 | <ul><li>Hadoop</li><li>MapReduce workflow</li></ul> | [Hadoop. MapReduce workflow](Seminars/Seminar%2009) | ¯\\\_(ツ)\_/¯ |
+| 22 апреля | 10 | <ul><li>Hadoop</li><li>YARN</li><li>Hadoop Streaming</li></ul> | [Hadoop. YARN. Hadoop Streaming](Seminars/Seminar%2010) | ¯\\\_(ツ)\_/¯ |
+| 28 апреля | 11 | <ul><li>Hadoop</li><li>Типичные MapReduce задачи</li></ul> | [Hadoop. Типичные MapReduce задачи](Seminars/Seminar%2011) | [MapReduce Collaborative Filtering](Tasks/task5/lab_05.pdf) |
+| 05 мая | 12 | <ul><li>Hadoop</li><li>Введение в Spark</li></ul> | [Hadoop. Введение в Spark](Seminars/Seminar%2012) | ¯\\\_(ツ)\_/¯ |
 
 ## Формат сдачи курса
 
